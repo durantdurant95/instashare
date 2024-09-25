@@ -40,12 +40,14 @@ export default function RootLayout({
                 {children}
               </div>
 
-              <footer className="w-full flex items-center justify-center gap-8 border-t mx-auto text-center text-sm py-4">
-                <p>
-                  Developed by{" "}
-                  <span className="font-bold">Alejandro Pérez Durán</span>
-                </p>
-                <ThemeSwitcher />
+              <footer className="w-full border-t py-8">
+                <div className="max-w-5xl flex items-center justify-between mx-auto text-center text-md">
+                  <p>
+                    Developed by{" "}
+                    <span className="font-bold">Alejandro Pérez Durán</span>
+                  </p>
+                  <ThemeSwitcher />
+                </div>
               </footer>
             </div>
           </main>
