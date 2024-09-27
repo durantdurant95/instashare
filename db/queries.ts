@@ -12,10 +12,8 @@ export const fetchUserFiles = async () => {
     .from("files")
     .list(user?.id + "/");
   if (error) {
-    console.error("Error fetching files:", error);
     return null;
   } else {
-    console.log("Files fetched successfully:", data);
     return data;
   }
 };

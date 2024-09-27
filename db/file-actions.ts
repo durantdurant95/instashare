@@ -16,10 +16,8 @@ export const uploadUserFile = async (file: File) => {
     .upload(filePath, file);
 
   if (error) {
-    console.error("Error uploading file:", error);
     throw error;
   } else {
-    console.log("File uploaded successfully:", data);
     return data;
   }
 };
