@@ -15,6 +15,9 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 export default function UploadButton() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -36,13 +39,23 @@ export default function UploadButton() {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFiles(Array.from(e.dataTransfer.files));
+      const droppedFile = e.dataTransfer.files[0];
+      if (droppedFile.size > MAX_FILE_SIZE_BYTES) {
+        toast.error(`File size exceeds ${MAX_FILE_SIZE_MB} MB limit`);
+      } else {
+        setFiles([droppedFile]);
+      }
     }
   }, []);
 
   const onFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFiles(Array.from(e.target.files));
+      const selectedFile = e.target.files[0];
+      if (selectedFile.size > MAX_FILE_SIZE_BYTES) {
+        toast.error(`File size exceeds ${MAX_FILE_SIZE_MB} MB limit`);
+      } else {
+        setFiles([selectedFile]);
+      }
     }
   }, []);
 
@@ -95,7 +108,8 @@ export default function UploadButton() {
           <DialogTitle>Upload Files</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          Select files to upload. The files will be linked to your account.
+          <p>The files will be linked to your account.</p>
+          <p>Maximum file size is {MAX_FILE_SIZE_MB} MB.</p>
         </DialogDescription>
         <div
           className={`mt-4 flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 transition-colors ${
