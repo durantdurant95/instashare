@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/sonner";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
 
             {children}
             <Footer />
+            <Toaster />
           </main>
         </ThemeProvider>
       </body>

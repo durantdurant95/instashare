@@ -1,4 +1,4 @@
-import { signOutAction } from "@/db/actions";
+import { signOutAction } from "@/db/auth-actions";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { Button } from "./ui/button";

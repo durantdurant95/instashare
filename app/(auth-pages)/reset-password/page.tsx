@@ -2,7 +2,7 @@ import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { resetPasswordAction } from "@/db/actions";
+import { resetPasswordAction } from "@/db/auth-actions";
 
 export default async function ResetPassword({
   searchParams,

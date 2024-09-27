@@ -1,7 +1,7 @@
+import FileUploadButton from "@/components/file-upload-button";
 import FilesTable from "@/components/files-table";
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
-import { Shield, Upload, Zap } from "lucide-react";
+import { Shield, Zap } from "lucide-react";
 
 export default async function Index() {
   const supabase = createClient();
@@ -56,10 +56,11 @@ export default async function Index() {
       <main className="flex-1 flex flex-col py-4 md:py-8 gap-8 px-4 w-full max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold">Uploaded Files</h1>
-          <Button>
+          {/* <Button>
             <Upload className="w-4 h-4 mr-2" />
             Upload Files
-          </Button>
+          </Button> */}
+          <FileUploadButton />
         </div>
         <FilesTable />
       </main>
