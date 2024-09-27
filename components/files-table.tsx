@@ -40,7 +40,11 @@ export default async function FilesTable({ userId }: Props) {
                     {file.name}
                   </div>
                 </TableCell>
-                <TableCell>{file.metadata.size}</TableCell>
+                <TableCell>
+                  {file.metadata.size < 1024 * 1024
+                    ? `${(file.metadata.size / 1024).toFixed(2)} KB`
+                    : `${(file.metadata.size / (1024 * 1024)).toFixed(2)} MB`}
+                </TableCell>
                 <TableCell>{file.updated_at}</TableCell>
                 <TableCell className="text-right">
                   <DeleteButton filePath={`${userId}/${file.name}`} />
