@@ -11,7 +11,7 @@ export default function ForgotPassword({
   searchParams: Message;
 }) {
   return (
-    <form className="flex-1 flex flex-col w-full gap-2 text-foreground [&>input]:mb-6 min-w-64 max-w-64 mx-auto">
+    <form className="flex-1 max-w-96 pt-4 md:pt-8 lg:pt-16 mx-auto w-full px-4">
       <div>
         <h1 className="text-2xl font-medium">Reset Password</h1>
         <p className="text-sm text-secondary-foreground">

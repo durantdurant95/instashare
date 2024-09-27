@@ -26,9 +26,7 @@ export default function RootLayout({
           <main className="min-h-screen flex flex-col">
             <Navbar />
 
-            <div className="flex grow flex-col gap-20 max-w-5xl pt-5 mx-auto">
-              {children}
-            </div>
+            {children}
             <Footer />
           </main>
         </ThemeProvider>
