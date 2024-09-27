@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { uploadUserFile } from "@/db/file-actions";
-import { File, Loader, Upload } from "lucide-react";
+import { File, Loader, Trash2, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
@@ -76,6 +76,10 @@ export default function UploadButton() {
     }
   }, [files]);
 
+  const handleRemoveFile = useCallback((index: number) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  }, []);
+
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
@@ -122,10 +126,22 @@ export default function UploadButton() {
         </div>
         {files.length > 0 && (
           <div className="mt-4">
-            <h3 className="font-semibold mb-2">Selected Files:</h3>
-            <ul className="text-sm">
+            <h3 className="font-semibold mb-2">Files to upload:</h3>
+            <ul className="text-sm py-4">
               {files.map((file, index) => (
-                <li key={index}>{file.name}</li>
+                <li
+                  key={index}
+                  className="flex justify-between items-center hover:bg-primary/15 rounded-md pl-2"
+                >
+                  {file.name}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveFile(index)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </li>
               ))}
             </ul>
           </div>
