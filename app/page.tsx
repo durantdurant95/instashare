@@ -62,7 +62,7 @@ export default async function Index() {
           </Button> */}
           <FileUploadButton />
         </div>
-        <FilesTable />
+        <FilesTable userId={user.id} />
       </main>
     );
   }

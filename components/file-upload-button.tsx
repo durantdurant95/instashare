@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { uploadUserFile } from "@/db/file-actions";
 import { File, Loader, Upload } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 
 export default function UploadButton() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,6 +60,7 @@ export default function UploadButton() {
       setIsLoading(false);
       setIsOpen(false);
       toast.success("Files uploaded successfully");
+      router.refresh();
       setFiles([]);
     } catch (error) {
       if (error instanceof Error) {

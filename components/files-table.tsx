@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,9 +7,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { fetchUserFiles } from "@/db/queries";
-import { FileIcon, Trash2 } from "lucide-react";
+import { FileIcon } from "lucide-react";
+import DeleteButton from "./delete-button";
 
-export default async function FilesTable() {
+type Props = { userId: string };
+export default async function FilesTable({ userId }: Props) {
   const files = await fetchUserFiles();
   return (
     <div className="border rounded-lg">
@@ -41,13 +42,7 @@ export default async function FilesTable() {
                 <TableCell>{file.metadata.size}</TableCell>
                 <TableCell>{file.updated_at}</TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    // onClick={() => handleDeleteFile(file.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  <DeleteButton filePath={`${userId}/${file.name}`} />
                 </TableCell>
               </TableRow>
             ))
