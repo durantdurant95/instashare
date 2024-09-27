@@ -11,13 +11,18 @@ export default function DeleteButton({ filePath }: Props) {
   const router = useRouter();
 
   const handleDeleteFile = async (fileId: string) => {
-    // Delete file from storage
-    toast.promise(deleteUserFile(fileId), {
-      loading: "Deleting file",
-      success: "File deleted successfully",
-      error: "Failed to delete file",
-    });
-    router.refresh();
+    try {
+      // Delete file from storage
+      toast.promise(deleteUserFile(fileId), {
+        loading: "Deleting file",
+        success: "File deleted successfully",
+        error: "Failed to delete file",
+      });
+      // Refresh the router
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to delete file");
+    }
   };
   return (
     <Button
