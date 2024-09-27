@@ -12,7 +12,6 @@ export default function DeleteButton({ filePath }: Props) {
 
   const handleDeleteFile = async (fileId: string) => {
     // Delete file from storage
-    console.log("Deleting file", filePath);
     toast.promise(deleteUserFile(fileId), {
       loading: "Deleting file",
       success: "File deleted successfully",

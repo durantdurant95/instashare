@@ -11,6 +11,7 @@ import { FileIcon } from "lucide-react";
 import DeleteButton from "./delete-button";
 
 type Props = { userId: string };
+
 export default async function FilesTable({ userId }: Props) {
   const files = await fetchUserFiles();
   return (
