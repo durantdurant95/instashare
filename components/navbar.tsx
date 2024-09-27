@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HeaderAuth from "./header-auth";
+import AuthDropdown from "./auth-dropdown";
 
 type Props = {};
 
@@ -12,7 +12,9 @@ export default function Navbar({}: Props) {
             InstaShare
           </Link>
         </div>
-        <HeaderAuth />
+        {/* <HeaderAuth />
+         */}
+        <AuthDropdown />
       </div>
     </nav>
   );
