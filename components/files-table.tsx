@@ -10,9 +10,9 @@ import { fetchUserFiles } from "@/db/queries";
 import { FileIcon } from "lucide-react";
 import DeleteButton from "./delete-button";
 
-export const dynamic = "force-dynamic";
-
-type Props = { userId: string };
+type Props = {
+  userId: string;
+};
 
 export default async function FilesTable({ userId }: Props) {
   const files = await fetchUserFiles();

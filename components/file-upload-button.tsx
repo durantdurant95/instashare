@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -38,24 +37,42 @@ export default function UploadButton() {
   const onDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const droppedFile = e.dataTransfer.files[0];
-      if (droppedFile.size > MAX_FILE_SIZE_BYTES) {
-        toast.error(`File size exceeds ${MAX_FILE_SIZE_MB} MB limit`);
-      } else {
-        setFiles([droppedFile]);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const droppedFiles = Array.from(e.dataTransfer.files);
+      const validFiles = droppedFiles.filter(
+        (file) => file.size <= MAX_FILE_SIZE_BYTES
+      );
+      const invalidFiles = droppedFiles.filter(
+        (file) => file.size > MAX_FILE_SIZE_BYTES
+      );
+
+      if (invalidFiles.length > 0) {
+        toast.error(
+          `Some files exceed the ${MAX_FILE_SIZE_MB} MB limit and were not added`
+        );
       }
+
+      setFiles((prevFiles) => [...prevFiles, ...validFiles]);
     }
   }, []);
 
   const onFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      if (selectedFile.size > MAX_FILE_SIZE_BYTES) {
-        toast.error(`File size exceeds ${MAX_FILE_SIZE_MB} MB limit`);
-      } else {
-        setFiles([selectedFile]);
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFiles = Array.from(e.target.files);
+      const validFiles = selectedFiles.filter(
+        (file) => file.size <= MAX_FILE_SIZE_BYTES
+      );
+      const invalidFiles = selectedFiles.filter(
+        (file) => file.size > MAX_FILE_SIZE_BYTES
+      );
+
+      if (invalidFiles.length > 0) {
+        toast.error(
+          `Some files exceed the ${MAX_FILE_SIZE_MB} MB limit and were not added`
+        );
       }
+
+      setFiles((prevFiles) => [...prevFiles, ...validFiles]);
     }
   }, []);
 
@@ -67,9 +84,8 @@ export default function UploadButton() {
   const handleUpload = useCallback(async () => {
     setIsLoading(true);
     try {
-      for (const file of files) {
-        await uploadUserFile(file);
-      }
+      const uploadPromises = files.map((file) => uploadUserFile(file));
+      await Promise.all(uploadPromises);
       setIsLoading(false);
       setIsOpen(false);
       toast.success("Files uploaded successfully");
@@ -108,8 +124,7 @@ export default function UploadButton() {
           <DialogTitle>Upload Files</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          <p>The files will be linked to your account.</p>
-          <p>Maximum file size is {MAX_FILE_SIZE_MB} MB.</p>
+          <span>Maximum file size is {MAX_FILE_SIZE_MB} MB.</span>
         </DialogDescription>
         <div
           className={`mt-4 flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6 transition-colors ${
