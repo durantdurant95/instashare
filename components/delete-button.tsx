@@ -10,13 +10,15 @@ type Props = { filePath: string };
 export default function DeleteButton({ filePath }: Props) {
   const router = useRouter();
   const handleDeleteFile = async (filePath: string) => {
-    // Delete file from storage
+    // Show toast notifications
     toast.promise(deleteUserFile(filePath), {
       loading: "Deleting file",
-      success: "File deleted successfully",
+      success: () => {
+        router.refresh();
+        return "File deleted successfully";
+      },
       error: "Failed to delete file",
     });
-    router.refresh();
   };
   return (
     <Button
