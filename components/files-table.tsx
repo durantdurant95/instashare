@@ -7,8 +7,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { fetchUserFiles } from "@/db/queries";
-import { FileIcon } from "lucide-react";
+import { FileIcon, MoreVertical } from "lucide-react";
 import DeleteButton from "./delete-button";
+import DownloadButton from "./download-button";
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 type Props = {
   userId: string;
@@ -49,7 +57,21 @@ export default async function FilesTable({ userId }: Props) {
                 </TableCell>
                 <TableCell>{file.updated_at}</TableCell>
                 <TableCell className="text-right">
-                  <DeleteButton filePath={`${userId}/${file.name}`} />
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent sideOffset={5} align="end">
+                      <DropdownMenuItem>
+                        <DownloadButton filePath={`${userId}/${file.name}`} />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <DeleteButton filePath={`${userId}/${file.name}`} />
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))

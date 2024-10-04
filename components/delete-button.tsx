@@ -25,8 +25,9 @@ export default function DeleteButton({ filePath }: Props) {
       variant="ghost"
       size="sm"
       onClick={() => handleDeleteFile(filePath)}
+      className="flex items-center gap-2 w-full justify-start"
     >
-      <Trash2 className="w-4 h-4" />
+      <Trash2 className="w-4 h-4" /> Delete File
     </Button>
   );
 }
